@@ -45,7 +45,7 @@ public class Display extends Canvas {
 
     public void SwapBuffers() {
         m_frameBuffer.CopyToByteArray(m_displayComponents);
-        m_graphics.drawImage(m_displayImage, 0, 0, m_frameBuffer.getWidth(), m_frameBuffer.getHeight(), null);
+        m_graphics.drawImage(m_displayImage, 0, 0, m_frameBuffer.GetWidth(), m_frameBuffer.GetHeight(), null);
         m_bufferStrategy.show();
     }
 

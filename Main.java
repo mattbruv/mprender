@@ -4,7 +4,7 @@ public class Main {
         Display display = new Display(800, 600, "Software Renderer");
 
         Bitmap target = display.GetFrameBuffer();
-        Stars3D stars = new Stars3D(4096, 64.0f, 20.0f);
+        Stars3D stars = new Stars3D(200, 64.0f, 20.0f);
 
         long previousTime = System.nanoTime();
 
@@ -13,7 +13,7 @@ public class Main {
             float delta = (float) ((currentTime - previousTime) / 1000000000.0);
             previousTime = currentTime;
 
-            stars.updateAndRender(target, delta);
+            stars.UpdateAndRender(target, delta);
             display.SwapBuffers();
         }
     }
