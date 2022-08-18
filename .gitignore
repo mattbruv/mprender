@@ -1,7 +1,0 @@
-*.log
-*.exe
-*.o
-*.tga
-include
-lib
-*.dll
