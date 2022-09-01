@@ -47,7 +47,7 @@ public class RenderContext extends Bitmap {
             midYVert = temp;
         }
 
-        float area = minYVert.TriangleArea(maxYVert, midYVert);
+        float area = minYVert.TriangleAreaX2(maxYVert, midYVert);
         int handedness = area >= 0 ? 1 : 0;
 
         ScanConvertTriangle(minYVert, midYVert, maxYVert, handedness);
