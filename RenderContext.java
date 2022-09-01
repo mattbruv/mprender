@@ -22,4 +22,37 @@ public class RenderContext extends Bitmap {
             }
         }
     }
+
+    public void ScanConvertTriangle(Vertex minYVert, Vertex midYVert, Vertex maxYVert, int whichSide) {
+
+        ScanConvertLine(minYVert, maxYVert, 0 + whichSide);
+        ScanConvertLine(minYVert, midYVert, 1 - whichSide);
+        ScanConvertLine(midYVert, maxYVert, 1 - whichSide);
+
+    }
+
+    private void ScanConvertLine(Vertex minYVert, Vertex maxYVert, int whichSide) {
+
+        int yStart = (int) minYVert.GetY();
+        int yEnd = (int) maxYVert.GetY();
+        int xStart = (int) minYVert.GetX();
+        int xEnd = (int) maxYVert.GetX();
+
+        int yDist = yEnd - yStart;
+        int xDist = xEnd - xStart;
+
+        if (yDist <= 0) {
+            return;
+        }
+
+        // how far along the x axis we move for each Y coordinate
+        float xStep = (float) xDist / (float) yDist;
+        float curX = (float) xStart;
+
+        for (int j = yStart; j < yEnd; j++) {
+            m_scanBuffer[j * 2 + whichSide] = (int) curX;
+            curX += xStep;
+        }
+
+    }
 }
