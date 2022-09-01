@@ -4,23 +4,38 @@ public class Main {
         Display display = new Display(800, 600, "Software Renderer");
 
         RenderContext target = display.GetFrameBuffer();
-        Stars3D stars = new Stars3D(200, 64.0f, 20.0f);
 
-        Vertex minYVert = new Vertex(100, 100);
-        Vertex midYVert = new Vertex(0, 200);
-        Vertex maxYVert = new Vertex(80, 300);
+        Vertex minYVert = new Vertex(-1, -1, 0);
+        Vertex midYVert = new Vertex(0, 1, 0);
+        Vertex maxYVert = new Vertex(1, -1, 0);
+
+        Matrix4f projection = new Matrix4f().InitPerspective(
+                (float) Math.toRadians(70.0f),
+                (float) target.GetWidth() / (float) target.GetHeight(),
+                0.1f,
+                1000.0f);
 
         long previousTime = System.nanoTime();
+
+        float rotCounter = 0.0f;
 
         while (true) {
             long currentTime = System.nanoTime();
             float delta = (float) ((currentTime - previousTime) / 1000000000.0);
             previousTime = currentTime;
 
+            rotCounter += delta;
+            Matrix4f translation = new Matrix4f().InitTranslation(0.0f, 0.0f, 3.0f);
+            Matrix4f rotation = new Matrix4f().InitRotation(0.0f, rotCounter, 0.0f);
+            Matrix4f transform = projection.Mul(translation.Mul(rotation));
+
             // stars.UpdateAndRender(target, delta);
             target.Clear((byte) 0x00);
 
-            target.FillTriangle(maxYVert, midYVert, minYVert);
+            target.FillTriangle(
+                    maxYVert.Transform(transform),
+                    midYVert.Transform(transform),
+                    minYVert.Transform(transform));
 
             display.SwapBuffers();
         }

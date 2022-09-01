@@ -10,8 +10,8 @@ public class Vertex {
         return m_pos.GetY();
     }
 
-    public Vertex(float x, float y) {
-        m_pos = new Vector4f(x, y, 0, 1);
+    public Vertex(float x, float y, float z) {
+        m_pos = new Vector4f(x, y, z, 1);
     }
 
     public Vertex(Vector4f pos) {
@@ -20,6 +20,15 @@ public class Vertex {
 
     public Vertex Transform(Matrix4f transform) {
         return new Vertex(transform.Transform(m_pos));
+    }
+
+    public Vertex PerspectiveDivide() {
+        return new Vertex(
+                new Vector4f(
+                        m_pos.GetX() / m_pos.GetW(),
+                        m_pos.GetY() / m_pos.GetW(),
+                        m_pos.GetZ() / m_pos.GetW(),
+                        m_pos.GetW()));
     }
 
     public float TriangleAreaX2(Vertex b, Vertex c) {
